@@ -15,7 +15,20 @@ const io = socketIO(server);
 
 io.on('connection', (socket) => {
   console.log('Client connected');
-  socket.on('disconnect', () => console.log('Client disconnected'));
+  socket.on('join', function(usr){
+    console.log('join: ' + usr);
+    io.emit('join', usr);
+  });
+  
+  socket.on('disconnect', function(usr){
+    console.log('disconnect: ' + usr);
+    io.emit('disconnect', usr);
+  });
+  
+  socket.on('message', function(msg){
+    console.log('message: ' + msg);
+    io.emit('message', msg);
+  });
 });
 
 setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
