@@ -29,6 +29,11 @@ io.on('connection', (socket) => {
     console.log('message: ' + msg);
     io.emit('message', msg);
   });
+  
+  socket.on('leave', function(usr){
+    console.log('leave: ' + usr);
+    io.emit('leave', usr);
+  });
 });
 
 setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
